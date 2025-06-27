@@ -1,5 +1,6 @@
 package com.job.jobApp.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.job.jobApp.job.Job;
 import jakarta.persistence.*;
 
@@ -14,16 +15,18 @@ public class Company {
     private String name;
     private String description;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "company")
     private List<Job> jobs;
 
     public Company() {
     }
 
-    public Company(Long id, String name, String description) {
+    public Company(Long id, String name, String description, List<Job> jobs) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.jobs = jobs;
     }
 
     public Long getId() {
@@ -43,5 +46,11 @@ public class Company {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public List<Job> getJobs() {
+        return jobs;
+    }
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 }
